@@ -65,6 +65,10 @@ func testArray2() {
 	var arr5 = make([]int, 200)
 	var point1 = &arr5[0]
 	fmt.Println(point1)
+	array := []int{10, 20, 30, 40}
+	slice := make([]int, 6) // {0,0,0,0,0,0}
+	n := copy(slice, array) // {10,20,30,40,0,0}
+	fmt.Println(n, slice)
 	// 从go的内存当中构建一个切片
 	/**
 	var ptr unsafe.Pointer
@@ -76,3 +80,22 @@ func testArray2() {
 	s := *(*[]byte)(unsafe.Pointer(&s1))
 	*/
 }
+
+/*
+func makeslice(et *_type, len, cap int) slice {
+	// 根据切片的数据类型，获取切片的最大容量
+	maxElements := maxSliceCap(et.size)
+	// 比较切片的长度，长度值域应该在[0,maxElements]之间
+	if len < 0 || uintptr(len) > maxElements {
+		panic(errorString("makeslice: len out of range"))
+	}
+	// 比较切片的容量，容量值域应该在[len,maxElements]之间
+	if cap < len || uintptr(cap) > maxElements {
+		panic(errorString("makeslice: cap out of range"))
+	}
+	// 根据切片的容量申请内存
+	p := mallocgc(et.size*uintptr(cap), et, true)
+	// 返回申请好内存的切片的首地址
+	return slice{p, len, cap}
+}
+*/
